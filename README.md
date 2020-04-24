@@ -1,2 +1,2 @@
-# Build-Voting-App-FreeCodeCamp
-Build a voting app - MERN
+# Chart-the-Stock-Market-FreeCodeCamp
+Chart the Stock Market - MERN
