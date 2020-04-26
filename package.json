@@ -21,12 +21,18 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-session": "^1.17.0",
+    "express-session": "^1.17.1",
     "http-proxy-middleware": "^1.0.3",
-    "mongoose": "^5.9.6",
-    "nodemon": "^2.0.2",
+    "mongoose": "^5.9.10",
+    "nodemon": "^2.0.3",
     "passport": "^0.4.1",
     "passport-twitter": "^1.0.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "quandl": "0.0.6",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {},
+  "resolutions": {
+    "cryptiles": "^4.1.3"
   }
 }
