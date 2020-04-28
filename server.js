@@ -8,15 +8,14 @@ const PORT = process.env.PORT || 8000 // express
 const bodyParser = require('body-parser')
 const mongoose = require("mongoose")
 const cors = require("cors")
-const http = require("http")
+const http = require("http").createServer(app)
 const socketIo = require("socket.io")
 //const cookieParser = require("cookie-parser")
 //const session = require("express-session")
-
+const io = socketIo(http)
 //const passportSetup = require("./config/passport-setup")
 //const authRouter = require("./routes/auth-router-ctrl")
-const stockRouter = require('./routes/stock-router')
-const indexRouter = require("./routes/index")
+const stockRouter = require('./routes/stock-router')(io)
 //const userRouter = require('./routes/user-router')
 const db = require('./db')
 
@@ -57,13 +56,10 @@ if (process.env.NODE_ENV === 'production') {
   app.use(function(req, res) {
   	res.sendFile(path.join(__dirname, '../client/build/index.html'))
   })
-} else {
-  app.use(indexRouter)
 }
 
-const server = app.listen(PORT, () => console.log(`Server on Port ${PORT}`))
+const server = http.listen(PORT, () => console.log(`Server on Port ${PORT}`))
 //const server = http.createServer(app)
-const io = socketIo(server)
 
 let interval
 
@@ -72,7 +68,7 @@ io.on("connection", (socket) => {
   if (interval) {
     clearInterval(interval)
   }
-  interval = setInterval(() => getApiAndEmit(socket), 1000)
+  //interval = setInterval(() => getApiAndEmit(socket), 1000)
   socket.on("disconnect", () => {
     console.log("Client disconnected")
     clearInterval(interval)
