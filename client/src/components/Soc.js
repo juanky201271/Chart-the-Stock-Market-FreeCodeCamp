@@ -9,9 +9,12 @@ function Soc({_this}) {
     const socket = socketIOClient(ENDPOINT)
     socket.on("Stock", data => {
       setResponse(data.message)
-      _this.state.socket = data.message
+      _this.setState({
+        socket: data.message,
+        key: new Date(),
+      })
     })
-  }, [])
+  }, [_this])
 
   return (
     <div style={{ fontSize: '20px', color: '#ddd', backgroundColor: '#222' }}>
