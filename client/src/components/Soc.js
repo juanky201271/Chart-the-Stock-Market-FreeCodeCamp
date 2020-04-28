@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import socketIOClient from "socket.io-client"
+import api from '../api'
 const ENDPOINT = process.env.PUBLIC_URL
 
 function Soc({_this}) {
@@ -9,9 +10,15 @@ function Soc({_this}) {
     const socket = socketIOClient(ENDPOINT)
     socket.on("Stock", data => {
       setResponse(data.message)
-      _this.setState({
-        socket: data.message,
-        key: new Date(),
+      api.getAllStocks().then(stocks => {
+        _this.setState({
+            stocks: stocks.data.data,
+            key: new Date(),
+            socket: data.message,
+        })
+      })
+      .catch(error => {
+        console.log(error)
       })
     })
   }, [_this])
