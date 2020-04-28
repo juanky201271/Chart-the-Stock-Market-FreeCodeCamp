@@ -6,7 +6,7 @@ module.exports = function(io) {
 
   stockRouter.post('/stock/table/:table', StockCtrl.createStock)
   stockRouter.put('/stock/:_id', StockCtrl.updateStock)
-  stockRouter.delete('/stock/:_id', StockCtrl.deleteStock)
+  stockRouter.delete('/stock/:_id/:table', StockCtrl.deleteStock)
   stockRouter.get('/stock/:_id', StockCtrl.getStockById)
   stockRouter.get('/stocks', StockCtrl.getStocks)
   stockRouter.get('/stocks/data', StockCtrl.getStocksData)

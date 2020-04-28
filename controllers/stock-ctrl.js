@@ -130,7 +130,7 @@ module.exports = function(io) {
         //if (!stock) {
         //  return res.status(404).json({ success: false, error: 'Stock not found', })
         //}
-        io.emit("Stock", {message: 'Delete Stock Code'})
+        io.emit("Stock", {message: 'Delete Stock Code: ' + req.params.table})
         return res.status(200).json({ success: true, }) // data: stock})
       })
       .catch(err => {

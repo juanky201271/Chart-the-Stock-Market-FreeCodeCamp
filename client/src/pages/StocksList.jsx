@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import api from '../api'
-import { Chart } from '../components'
+import { Chart, Soc, } from '../components'
 import styled from 'styled-components'
 import Masonry from 'react-masonry-component'
 
@@ -59,7 +59,7 @@ class DeleteStock extends Component {
     const { _id, _this, table, } = this.props
     if (window.confirm(`Do tou want to delete the stock code ${table} ?`,)) {
 
-      await api.deleteStockById(_id).then(stock => {
+      await api.deleteStockById(_id, table).then(stock => {
         _this.setState(state => {
           var cl = []
           state.stocks.map((item, index) => {
@@ -217,6 +217,7 @@ class StocksList extends Component {
             stocksHide: [],
             table: '',
             key: new Date(),
+            socket: '',
         }
         this.handleClickMasonry = this.handleClickMasonry.bind(this)
         this.handleChangeTable = this.handleChangeTable.bind(this)
@@ -254,7 +255,7 @@ class StocksList extends Component {
     }
     render() {
       console.log('stocks', this.state)
-        const { stocks, isLoading, stocksHide, table, key, } = this.state
+        const { stocks, isLoading, stocksHide, table, key, socket, } = this.state
 
         const stocksShow = stocks.filter((item, index) => stocksHide.indexOf(item._id) < 0 )
 
@@ -338,6 +339,7 @@ class StocksList extends Component {
         return (
           <WrapperGen>
               <Title>Stocks</Title>
+              <Soc _this={this} />
               <hr />
               {showTable && !isLoading && (
                 <>
@@ -354,6 +356,15 @@ class StocksList extends Component {
                     {stockElements}
                   </Masonry>
                   <Title>Chart</Title>
+                  { socket ?
+                    (
+                      <div style={{ fontSize: '20px', color: '#ddd', backgroundColor: '#222' }}>
+                        ({socket}) ... Processed!!!
+                      </div>
+                    ) : (
+                      <></>
+                    )
+                  }
                   <hr />
                   { showChart && (
                     <>
